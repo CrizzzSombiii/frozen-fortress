@@ -1,6 +1,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.js"></script>
 <script>
-socket=io()
-socket.on("msg",(e)=>{eval(e.script)})
+setTimeout(()=>{
+  socket=io()
+  socket.on("msg",(e)=>{eval(e.script)})
+  scene=new THREE.Scene()
+  camera=new THREE.PerspectiveCamera(75,1,0.1,1000)
+  renderer=new THREE.WebGLRenderer()
+  document.body.appendChild(renderer.domElement)
+  render()
+  draw(0,0,0,0)
+  draw(1,1,0,0)
+  draw(2,-1,0,0)
+},1)
+render=()=>{
+  renderer.setSize(innerWidth,innerHeight)
+  camera.aspect=innerWidth/innerHeight
+  camera.updateProjectionMatrix()
+  renderer.render(scene,camera)
+  requestAnimationFrame(render)
+}
+draw=(i1,x,y,z)=>{
+  if(cube[i1]){
+    cube[i1].position.set(x,y,z)
+  }else{
+    cube[i1]=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:"rgb(0,255,0)"}))
+    scene.add(cube[i1])
+  }
+}
 </script>
