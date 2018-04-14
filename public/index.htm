@@ -12,9 +12,6 @@ setTimeout(()=>{
   document.body.appendChild(renderer.domElement)
   render()
 },1)
-setInterval(()=>{
-  draw(0,0,0,0)
-},1)
 render=()=>{
   renderer.setSize(innerWidth,innerHeight)
   camera.aspect=innerWidth/innerHeight
