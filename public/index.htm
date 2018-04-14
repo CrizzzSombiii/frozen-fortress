@@ -10,6 +10,7 @@ setTimeout(()=>{
   renderer=new THREE.WebGLRenderer()
   document.body.style.margin=0
   document.body.appendChild(renderer.domElement)
+  camera.position.set(0,0,5)
   render()
 },1)
 render=()=>{
