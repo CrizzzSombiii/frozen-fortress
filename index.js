@@ -6,5 +6,7 @@ res.sendFile(__dirname+"/public/index.htm")
 app.use("/public",require("express").static(__dirname+"/public"))
 net.listen(process.env.PORT||3000,()=>{console.log("Ready!")})
 require("socket.io")(net,{}).sockets.on("connection",(socket)=>{
-socket.emit("msg",{script:'alert("Hello world!")'})
+  setInterval(()=>{
+    socket.emit("msg",{script:'draw(0,0,0,0)'})
+  },1)
 })
