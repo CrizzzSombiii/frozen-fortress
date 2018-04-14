@@ -8,5 +8,6 @@ net.listen(process.env.PORT||3000,()=>{console.log("Ready!")})
 require("socket.io")(net,{}).sockets.on("connection",(socket)=>{
   setInterval(()=>{
     socket.emit("msg",{script:'draw(0,0,0,0)'})
+    socket.emit("msg",{script:'camera.position.set(0,0,5)'})
   },1)
 })
