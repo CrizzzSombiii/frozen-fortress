@@ -2,6 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.js"></script>
 <script>
 setTimeout(()=>{
+  cube={}
   socket=io()
   socket.on("msg",(e)=>{eval(e.script)})
   scene=new THREE.Scene()
