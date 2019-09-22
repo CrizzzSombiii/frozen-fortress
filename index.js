@@ -1,4 +1,6 @@
 obj={}
+mongojs=require("mongojs")
+db=mongojs("ds117590.mlab.com:17590/mc2db",{"account","progress"])
 app=require("express")()
 net=require("http").createServer(app)
 app.get("/",(req,res)=>{
@@ -7,10 +9,10 @@ res.sendFile(__dirname+"/public/index.htm")
 app.use("/public",require("express").static(__dirname+"/public"))
 net.listen(process.env.PORT||3000,()=>{console.log("Ready!")})
 require("socket.io")(net,{}).sockets.on("connection",(socket)=>{
-  socket.i=Math.random()
-  obj[socket.i]={x:0,y:0,z:0}
-  setInterval(()=>{
-    socket.emit("msg",{script:'draw('+socket.id+','+obj[socket.i].x+','+obj[socket.i].y+','+obj[socket.i].z+')'})
-    socket.emit("msg",{script:'camera.position.set('+obj[socket.i].x+','+obj[socket.i].y+','+eval(obj[socket.i].z+5)+')'})
-  },1)
+  socket.on("read",(e)=>{
+    return db.collection.find({variable:e.variable})
+  })
+  socket.on("save",(e)=>{
+    db.products.insert({variable:e.variable,value:e.value})
+  })
 })
